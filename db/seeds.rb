@@ -1,11 +1,13 @@
-InvoiceItem.destroy_all 
-Customer.destroy_all 
-Merchant.destroy_all 
-Invoice.destroy_all 
-Item.destroy_all 
-Transaction.destroy_all 
+# InvoiceItem.destroy_all 
+# Customer.destroy_all 
+# Merchant.destroy_all 
+# Invoice.destroy_all 
+# Item.destroy_all 
+# Transaction.destroy_all
+# Discount.destroy_all
 
 merchant1 = Merchant.create!(name: 'Hair Care')
+merchant2 = Merchant.create!(name: 'Nail Care')
 
 customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
 customer_2 = Customer.create!(first_name: 'Cecilia', last_name: 'Jones')
@@ -39,3 +41,10 @@ transaction4 = Transaction.create!(credit_card_number: 230429, result: 1, invoic
 transaction5 = Transaction.create!(credit_card_number: 102938, result: 1, invoice_id: invoice_6.id)
 transaction6 = Transaction.create!(credit_card_number: 879799, result: 1, invoice_id: invoice_7.id)
 transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: invoice_2.id)
+
+discount1 = Discount.create!(item_requirement: 10, percentage_discount: 0.20, merchant_id: merchant1.id)
+discount2 = Discount.create!(item_requirement: 15, percentage_discount: 0.25, merchant_id: merchant1.id)
+discount3 = Discount.create!(item_requirement: 5, percentage_discount: 0.10, merchant_id: merchant1.id)
+discount4 = Discount.create!(item_requirement: 20, percentage_discount: 0.40, merchant_id: merchant1.id)
+discount5 = Discount.create!(item_requirement: 50, percentage_discount: 0.45, merchant_id: merchant1.id)
+discount6 = Discount.create!(item_requirement: 19, percentage_discount: 0.30, merchant_id: merchant2.id)
