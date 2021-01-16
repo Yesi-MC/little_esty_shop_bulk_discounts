@@ -1,4 +1,11 @@
-<% @discounts.each do |discount| %>
-  <%= discount.item_requirement %>
-  <%= discount.percentage_discount %>
-<% end %>
+<h2> Discount for <%= @merchant.name %> </h2>
+
+<ol><% @discounts.each do |discount| %>
+  <div class="discount-<%= discount.id %>">
+    <li><%= link_to "View this Discount", merchant_discount_path(@merchant.id, discount.id) %><br>
+    Item Requirement: <%= discount.item_requirement %><br>
+    Discount Percent <%= discount.percentage_discount %></li><br>
+  </div>
+<% end %></ol>
+
+<h4> <%= link_to "Create New Discount", "/merchant/#{@merchant.id}/discounts/new" %> </h4>
