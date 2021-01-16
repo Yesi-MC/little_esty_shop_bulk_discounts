@@ -33,8 +33,21 @@ describe "merchant discounts index '/merchant/:id/discounts'" do
     expect(page).to_not have_content(@discount6.item_requirement)
     expect(page).to_not have_content(@discount6.percentage_discount)
   end
-# And each bulk discount listed includes a link to its show page "
+  it "can see each bulk discount listed includes a link to its show page" do 
+    visit merchant_discounts_path(@merchant1.id)
 
+    within ".discount-#{@discount1.id}" do 
+      expect(page).to have_link("View this Discount")
+      click_link "View this Discount"
+    end 
 
+    expect(current_path).to eq(merchant_discount_path(@merchant1.id, @discount1.id))
+  end
+  it "can see a link to create a new discount then I am redirected to a new form where I can add a new discount" do 
+    visit merchant_discounts_path(@merchant1.id)
 
+    expect(page).to have_link("Create New Discount")
+    click_link "Create New Discount"
+    expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts/new")
+  end
 end
