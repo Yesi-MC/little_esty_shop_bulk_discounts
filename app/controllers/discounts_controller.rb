@@ -30,12 +30,6 @@ class DiscountsController < ApplicationController
     redirect_to merchant_discounts_path(merchant.id)
   end
 
-  def destroy
-    merchant = Merchant.find(params[:merchant_id])
-    Discount.destroy(params[:id])
-    redirect_to merchant_discounts_path(merchant.id)
-  end
-
   def edit 
     @merchant = Merchant.find(params[:merchant_id])
     @discount = Discount.find(params[:id])
@@ -51,6 +45,12 @@ class DiscountsController < ApplicationController
     redirect_to merchant_discount_path(@merchant.id, @discount.id)
   end
 
+  def destroy
+    merchant = Merchant.find(params[:merchant_id])
+    Discount.destroy(params[:id])
+    redirect_to merchant_discounts_path(merchant.id)
+  end
+end 
   # def update
   #   invoiceItem = InvoiceItem.find(params[:id])
   #   invoiceItem.update!(invoice_item_params)
@@ -71,4 +71,3 @@ class DiscountsController < ApplicationController
   # def find discount
   #   @discount = Discount.find(params[:id])
   # end
-end
