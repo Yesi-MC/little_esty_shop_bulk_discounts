@@ -95,5 +95,15 @@ RSpec.describe 'invoices show' do
       expect(page).to_not have_content("in progress")
      end
   end
-
+  it "can see a link to the show page for the discount that was applied" do 
+    visit merchant_invoice_path(@merchant1.id, @invoice_1.id)
+    #/merahcnts/:id/invoice/:id
+    within ".invoices-#{invoice_1.id}" do 
+      expect(page).to have_link(merchant_discount_path(@merchant1.id, @invoice_1.id))
+    end 
 end
+
+
+# As a merchant
+# When I visit my merchant invoice show page
+# Next to each invoice item I see a link to the show page for the bulk discount that was applied (if any)
