@@ -4,7 +4,8 @@
   <div class="discount-<%= discount.id %>">
     <li><%= link_to "View this Discount", merchant_discount_path(@merchant.id, discount.id) %><br>
     Item Requirement: <%= discount.item_requirement %><br>
-    Discount Percent <%= discount.percentage_discount %></li><br>
+    Discount Percent <%= discount.percentage_discount %><br>
+    <%= link_to "Delete Discount", merchant_discount_path(@merchant.id, discount.id), method: :delete %></li><br>
   </div>
 <% end %></ol>
 
