@@ -12,6 +12,7 @@ class DiscountsController < ApplicationController
 
   def show #if using before acion would just be empty 
     @discount = Discount.find(params[:id])
+    @merchant = Merchant.find(params[:merchant_id])
   end
 
   def new 
@@ -33,6 +34,11 @@ class DiscountsController < ApplicationController
     merchant = Merchant.find(params[:merchant_id])
     Discount.destroy(params[:id])
     redirect_to merchant_discounts_path(merchant.id)
+  end
+
+  def edit 
+    @merchant = Merchant.find(params[:merchant_id])
+    @discount = Discount.find(params[:id])
   end
 
   # private 
