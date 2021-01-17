@@ -29,7 +29,6 @@ RSpec.describe 'invoices show' do
     @invoice_5 = Invoice.create!(merchant_id: @merchant1.id, customer_id: @customer_4.id, status: 2)
     @invoice_6 = Invoice.create!(merchant_id: @merchant1.id, customer_id: @customer_5.id, status: 2)
     @invoice_7 = Invoice.create!(merchant_id: @merchant1.id, customer_id: @customer_6.id, status: 2)
-
     @invoice_8 = Invoice.create!(merchant_id: @merchant2.id, customer_id: @customer_6.id, status: 1)
 
     @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 9, unit_price: 10, status: 2)
@@ -51,6 +50,13 @@ RSpec.describe 'invoices show' do
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 0, invoice_id: @invoice_6.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_7.id)
     @transaction8 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_8.id)
+
+    @discount1 = Discount.create!(item_requirement: 10, percentage_discount: 0.20, merchant_id: @merchant1.id)
+    @discount2 = Discount.create!(item_requirement: 15, percentage_discount: 0.25, merchant_id: @merchant1.id)
+    @discount3 = Discount.create!(item_requirement: 5, percentage_discount: 0.10, merchant_id: @merchant1.id)
+    @discount4 = Discount.create!(item_requirement: 20, percentage_discount: 0.40, merchant_id: @merchant1.id)
+    @discount5 = Discount.create!(item_requirement: 50, percentage_discount: 0.45, merchant_id: @merchant1.id)
+    @discount6 = Discount.create!(item_requirement: 19, percentage_discount: 0.30, merchant_id: @merchant2.id)
   end
 
   it "shows the invoice information" do
@@ -95,15 +101,14 @@ RSpec.describe 'invoices show' do
       expect(page).to_not have_content("in progress")
      end
   end
-  it "can see a link to the show page for the discount that was applied" do 
+  it "can see that the total revenue for my merchant including bulk discounts in the calculation" do 
     visit merchant_invoice_path(@merchant1.id, @invoice_1.id)
-    #/merahcnts/:id/invoice/:id
-    within ".invoices-#{invoice_1.id}" do 
-      expect(page).to have_link(merchant_discount_path(@merchant1.id, @invoice_1.id))
+  
+    within("#the-status-#{@ii_1.id}") do
+      expect(page).to have_content(merchant_discount_path(@merchant1.id, @invoice_1.id))
     end 
-end
+  end 
+end 
 
 
-# As a merchant
-# When I visit my merchant invoice show page
-# Next to each invoice item I see a link to the show page for the bulk discount that was applied (if any)
+
