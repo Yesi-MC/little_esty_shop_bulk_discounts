@@ -56,8 +56,8 @@ describe "merchant discounts index '/merchant/:id/discounts'" do
     visit merchant_discounts_path(@merchant1.id)
 
     within ".discount-#{discount7.id}" do 
-    expect(page).to have_link("Delete Discount")
-    click_link "Delete Discount"
+    expect(page).to have_button("Delete Discount")
+    click_button "Delete Discount"
   end 
     expect(current_path).to eq(merchant_discounts_path(@merchant1.id))
   end 
