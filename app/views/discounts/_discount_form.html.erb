@@ -1,0 +1,9 @@
+<%= form_with model: model, url: url do |f|%>
+  <%= f.label :item_requirement, 'Item Amount Requirement:' %>
+  <%= f.text_field :item_requirement %>
+
+  <%= f.label :percentage_discount, 'Percentage Off:' %>
+  <%= f.text_field :percentage_discount %>
+
+  <%= f.submit 'Submit' %>
+<% end %>
