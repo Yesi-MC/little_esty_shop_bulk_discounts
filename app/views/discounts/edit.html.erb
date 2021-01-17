@@ -1,0 +1,5 @@
+<h1>Edit this Discount</h1><br>
+<%= render partial: 'discount_form', locals: {
+                                              model: @discount, 
+                                              url: merchant_discount_path(@merchant.id, @discount.id)
+                                              } %>
