@@ -50,4 +50,15 @@ describe "merchant discounts index '/merchant/:id/discounts'" do
     click_link "Create New Discount"
     expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts/new")
   end
+  it "can see a link to delete a bulk discount" do 
+    discount7 = Discount.create!(item_requirement: 19, percentage_discount: 0.36, merchant_id: @merchant1.id)
+
+    visit merchant_discounts_path(@merchant1.id)
+
+    within ".discount-#{discount7.id}" do 
+    expect(page).to have_link("Delete Discount")
+    click_link "Delete Discount"
+  end 
+    expect(current_path).to eq(merchant_discounts_path(@merchant1.id))
+  end 
 end
