@@ -89,7 +89,7 @@ RSpec.describe Item, type: :model do
     end
 
     it "find total price with the discount" do 
-      expect(@item_1.price_with_discount(6)).to eq(9.00)
+      expect(@item_1.price_with_discount(6, @ii_1)).to eq(9.00)
     end
   end 
 end
