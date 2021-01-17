@@ -7,6 +7,8 @@ class Item < ApplicationRecord
   has_many :invoice_items
   has_many :invoices, through: :invoice_items
   belongs_to :merchant
+  has_many :discounts, through: :merchant
+
 
   enum status: [:disabled, :enabled]
 
@@ -20,5 +22,18 @@ class Item < ApplicationRecord
     .first
     .created_at
     .to_date
+  end
+
+  def find_discount(item_quantity)
+    discount = discounts.where("item_requirement <= #{item_quantity}").order(percentage_discount: :desc).limit(1)
+    if !discount.empty? 
+      1 - discount[0].percentage_discount
+    else
+      1
+    end
+  end
+
+  def price_with_discount(number_of_items)
+    unit_price * find_discount(number_of_items)
   end
 end
