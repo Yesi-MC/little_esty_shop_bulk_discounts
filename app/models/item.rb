@@ -33,7 +33,8 @@ class Item < ApplicationRecord
     end
   end
 
-  def price_with_discount(number_of_items)
-    unit_price * find_discount(number_of_items)
+  def price_with_discount(number_of_items, inv_itm)
+    # require 'pry'; binding.pry
+    inv_itm.unit_price * find_discount(number_of_items)  
   end
 end
