@@ -14,8 +14,4 @@ Rails.application.routes.draw do
     resources :merchant_status, only: [:update]
     resources :invoices, except: [:new, :destroy]
   end
-
-  # get "/merchant/:id/discounts", to: "merchant_discounts#index"
-  # delete "/merchant/:id/discounts", to: "merchant_discounts#destory"
-
 end
