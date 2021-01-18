@@ -10,6 +10,7 @@ RSpec.describe Item, type: :model do
   describe "relationships" do
     it { should have_many(:invoices).through(:invoice_items) }
     it { should belong_to :merchant }
+    it { should have_many(:discounts).through(:merchant) }
   end
   describe "instance methods" do
     it "best day" do
@@ -60,5 +61,39 @@ RSpec.describe Item, type: :model do
 
       expect(@item_1.best_day).to eq(@invoice_2.created_at.to_date)
     end
-  end
+    before :each do 
+      @merchant1 = Merchant.create!(name: 'Hair Care')
+      @merchant2 = Merchant.create!(name: 'Jewelry')
+
+      @item_1 = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: @merchant1.id, status: 1)
+      @item_8 = Item.create!(name: "Butterfly Clip", description: "This holds up your hair but in a clip", unit_price: 5, merchant_id: @merchant1.id)
+
+      @customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
+
+      @invoice_1 = Invoice.create!(merchant_id: @merchant1.id, customer_id: @customer_1.id, status: 2, created_at: "2012-03-27 14:54:09")
+
+      @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 9, unit_price: 10, status: 2)
+      @ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 1, unit_price: 10, status: 1)
+  
+      @discount1 = Discount.create!(item_requirement: 10, percentage_discount: 0.20, merchant_id: @merchant1.id)
+      @discount2 = Discount.create!(item_requirement: 15, percentage_discount: 0.25, merchant_id: @merchant1.id)
+      @discount3 = Discount.create!(item_requirement: 5, percentage_discount: 0.10, merchant_id: @merchant1.id)
+      @discount4 = Discount.create!(item_requirement: 20, percentage_discount: 0.40, merchant_id: @merchant1.id)
+      @discount5 = Discount.create!(item_requirement: 50, percentage_discount: 0.45, merchant_id: @merchant1.id)
+      @discount6 = Discount.create!(item_requirement: 19, percentage_discount: 0.30, merchant_id: @merchant2.id)
+    end 
+
+    it "finds discount" do
+      expect(@item_1.find_discount(6)).to eq(0.90)
+      expect(@item_1.find_discount(1)).to eq(1.0)
+    end
+
+    it "find total price with the discount" do 
+      expect(@item_1.price_with_discount(6, @ii_1)).to eq(9.00)
+    end
+
+    it "it knows associated discount" do 
+      expect(@item_1.get_discount(6)).to eq([@discount3])
+    end
+  end 
 end

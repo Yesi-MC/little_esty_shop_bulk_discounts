@@ -1,8 +1,13 @@
 <h2> Discount Description </h2>
 <br>
     <h4>Item Requirement: <%= @discount.item_requirement %></h4>
-    <h4>Discount Percent <%= @discount.percentage_discount %></h4>
+    <h4>Discount Percent <%= @discount.percentage_discount %></h4><br>
 
-<h4> <%= link_to "Edit this Discount", edit_merchant_discount_path(@merchant.id, @discount.id) %> </h4>
 
+<header>
+<ul>
+<p> <%= link_to "Edit this Discount", edit_merchant_discount_path(@merchant.id, @discount.id) %> </p>
+
+<p> <%= link_to "Back to Discount Page", "/merchant/#{@merchant.id}/discounts" %> </p>
+ </head><br>
 

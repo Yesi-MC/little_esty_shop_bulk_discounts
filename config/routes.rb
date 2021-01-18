@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  get '/', to: 'welcome#index', as: :root
+
   resources :merchant, only: [:show] do
     resources :dashboard, only: [:index]
     resources :items, except: [:destroy]
@@ -14,8 +16,4 @@ Rails.application.routes.draw do
     resources :merchant_status, only: [:update]
     resources :invoices, except: [:new, :destroy]
   end
-
-  # get "/merchant/:id/discounts", to: "merchant_discounts#index"
-  # delete "/merchant/:id/discounts", to: "merchant_discounts#destory"
-
 end

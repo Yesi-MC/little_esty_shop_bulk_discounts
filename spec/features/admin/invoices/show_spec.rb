@@ -3,6 +3,7 @@ require 'rails_helper'
 describe 'Admin Invoices Index Page' do
   before :each do
     @m1 = Merchant.create!(name: 'Merchant 1')
+    @m2 = Merchant.create!(name: 'Jewelry')
 
     @c1 = Customer.create!(first_name: 'Yo', last_name: 'Yoz', address: '123 Heyyo', city: 'Whoville', state: 'CO', zip: 12345)
     @c2 = Customer.create!(first_name: 'Hey', last_name: 'Heyz')
@@ -16,6 +17,13 @@ describe 'Admin Invoices Index Page' do
     @ii_1 = InvoiceItem.create!(invoice_id: @i1.id, item_id: @item_1.id, quantity: 12, unit_price: 2, status: 0)
     @ii_2 = InvoiceItem.create!(invoice_id: @i1.id, item_id: @item_2.id, quantity: 6, unit_price: 1, status: 1)
     @ii_3 = InvoiceItem.create!(invoice_id: @i2.id, item_id: @item_2.id, quantity: 87, unit_price: 12, status: 2)
+
+    @discount1 = Discount.create!(item_requirement: 10, percentage_discount: 0.20, merchant_id: @m1.id)
+    @discount2 = Discount.create!(item_requirement: 15, percentage_discount: 0.25, merchant_id: @m1.id)
+    @discount3 = Discount.create!(item_requirement: 5, percentage_discount: 0.10, merchant_id: @m1.id)
+    @discount4 = Discount.create!(item_requirement: 20, percentage_discount: 0.40, merchant_id: @m1.id)
+    @discount5 = Discount.create!(item_requirement: 50, percentage_discount: 0.45, merchant_id: @m1.id)
+    @discount6 = Discount.create!(item_requirement: 19, percentage_discount: 0.30, merchant_id: @m2.id)
 
     visit admin_invoice_path(@i1)
   end
@@ -68,6 +76,15 @@ describe 'Admin Invoices Index Page' do
       expect(current_path).to eq(admin_invoice_path(@i1))
       expect(@i1.status).to eq('complete')
     end
+  end
+  
+  it "can see the total revenue with the discounts including bulk discounts in the calculation" do 
+   
+    expect(page).to have_content("Price with Discount")
+
+    within("#inv-itm-#{@ii_1.id}") do
+      expect(page).to have_content(@ii_1.item.price_with_discount(@ii_1.quantity, @ii_1))
+    end 
   end
 end
 
