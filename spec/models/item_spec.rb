@@ -91,5 +91,9 @@ RSpec.describe Item, type: :model do
     it "find total price with the discount" do 
       expect(@item_1.price_with_discount(6, @ii_1)).to eq(9.00)
     end
+
+    it "it knows associated discount" do 
+      expect(@item_1.get_discount(6)).to eq([@discount3])
+    end
   end 
 end
