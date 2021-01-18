@@ -9,11 +9,10 @@ RSpec.describe 'invoices show' do
     @item_2 = Item.create!(name: "Conditioner", description: "This makes your hair shiny", unit_price: 8, merchant_id: @merchant1.id)
     @item_3 = Item.create!(name: "Brush", description: "This takes out tangles", unit_price: 5, merchant_id: @merchant1.id)
     @item_4 = Item.create!(name: "Hair tie", description: "This holds up your hair", unit_price: 1, merchant_id: @merchant1.id)
-    @item_7 = Item.create!(name: "Scrunchie", description: "This holds up your hair but is bigger", unit_price: 3, merchant_id: @merchant1.id)
-    @item_8 = Item.create!(name: "Butterfly Clip", description: "This holds up your hair but in a clip", unit_price: 5, merchant_id: @merchant1.id)
-
     @item_5 = Item.create!(name: "Bracelet", description: "Wrist bling", unit_price: 200, merchant_id: @merchant2.id)
     @item_6 = Item.create!(name: "Necklace", description: "Neck bling", unit_price: 300, merchant_id: @merchant2.id)
+    @item_7 = Item.create!(name: "Scrunchie", description: "This holds up your hair but is bigger", unit_price: 3, merchant_id: @merchant1.id)
+    @item_8 = Item.create!(name: "Butterfly Clip", description: "This holds up your hair but in a clip", unit_price: 5, merchant_id: @merchant1.id)
 
     @customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
     @customer_2 = Customer.create!(first_name: 'Cecilia', last_name: 'Jones')
@@ -110,7 +109,17 @@ RSpec.describe 'invoices show' do
       expect(page).to have_content(@ii_1.item.price_with_discount(@ii_1.quantity, @ii_1))
     end 
   end 
+  it "can see see a link to the show page for the bulk discount that was applied (if any)" do 
+    visit merchant_invoice_path(@merchant1.id, @invoice_1.id)
  
+    expect(page).to have_content("Discount Applied")
+
+    within("#the-status-#{@ii_1.id}") do
+      expect(page).to have_link("Discount Info")
+      click_link "Discount Info"
+      expect(current_path).to eq(merchant_discount_path(@merchant1.id, @discount3.id))
+    end 
+  end 
 end 
 
 
