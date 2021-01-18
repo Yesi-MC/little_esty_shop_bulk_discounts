@@ -25,7 +25,7 @@ class Item < ApplicationRecord
   end
 
   def find_discount(item_quantity)
-    discount = discounts.where("item_requirement <= #{item_quantity}").order(percentage_discount: :desc).limit(1)
+    discount = get_discount(item_quantity) 
     if !discount.empty? 
       1 - discount[0].percentage_discount
     else
@@ -35,5 +35,9 @@ class Item < ApplicationRecord
 
   def price_with_discount(number_of_items, inv_itm)
     inv_itm.unit_price * find_discount(number_of_items)  
+  end
+
+  def get_discount(item_quantity) 
+    discounts.where("item_requirement <= #{item_quantity}").order(percentage_discount: :desc).limit(1)
   end
 end
