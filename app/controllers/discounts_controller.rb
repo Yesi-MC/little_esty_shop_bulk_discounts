@@ -22,10 +22,7 @@ class DiscountsController < ApplicationController
 
   def create
     merchant = Merchant.find(params[:merchant_id])
-    discount = Discount.create!(
-      item_requirement: params[:discount][:item_requirement], 
-      percentage_discount: params[:discount][:percentage_discount], 
-      merchant_id: merchant.id)
+    discount = merchant.discounts.create!(discount_params)
 
     redirect_to merchant_discounts_path(merchant.id)
   end
@@ -38,9 +35,8 @@ class DiscountsController < ApplicationController
   def update
     @merchant = Merchant.find(params[:merchant_id])
     @discount = Discount.find(params[:id])
-    @discount.update({
-      item_requirement: params[:discount][:item_requirement],
-      percentage_discount: params[:discount][:percentage_discount]})
+    @discount.update(discount_params)
+
     @discount.save
     redirect_to merchant_discount_path(@merchant.id, @discount.id)
   end
@@ -50,18 +46,15 @@ class DiscountsController < ApplicationController
     Discount.destroy(params[:id])
     redirect_to merchant_discounts_path(merchant.id)
   end
+
+  private 
+
+  def discount_params
+    params.require(:discount).permit(:item_requirement, :percentage_discount)
+  end
+  
 end 
-  # def update
-  #   invoiceItem = InvoiceItem.find(params[:id])
-  #   invoiceItem.update!(invoice_item_params)
-  #   redirect_to "/merchants/#{invoiceItem.invoice.merchant.id}/invoices/#{invoiceItem.invoice.id}"
-  # end
 
-  # private
-
-  # def invoice_item_params
-  #   params.require(:invoice_item).permit(:status)
-  # end
   # private 
 
   # def find_merchant
