@@ -11,4 +11,4 @@ Write feature tests that fully cover the functionality of the application
 
 ## Database Schema 
 
-![Bulk Discounts ](https://user-images.githubusercontent.com/69552154/104976003-69931200-59b9-11eb-86d0-3587db1fe9b6.png)
+![Little Esty Bulk Discount Schema](https://user-images.githubusercontent.com/69552154/105106526-4cbb1500-5a73-11eb-9313-b6ea69ecd4a2.png)
