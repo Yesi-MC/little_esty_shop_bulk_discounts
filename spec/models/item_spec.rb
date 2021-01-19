@@ -7,11 +7,13 @@ RSpec.describe Item, type: :model do
     it { should validate_presence_of :unit_price }
     it { should validate_presence_of :merchant_id }
   end
+
   describe "relationships" do
     it { should have_many(:invoices).through(:invoice_items) }
     it { should belong_to :merchant }
     it { should have_many(:discounts).through(:merchant) }
   end
+
   describe "instance methods" do
     it "best day" do
       @merchant1 = Merchant.create!(name: 'Hair Care')
@@ -61,6 +63,7 @@ RSpec.describe Item, type: :model do
 
       expect(@item_1.best_day).to eq(@invoice_2.created_at.to_date)
     end
+    
     before :each do 
       @merchant1 = Merchant.create!(name: 'Hair Care')
       @merchant2 = Merchant.create!(name: 'Jewelry')
