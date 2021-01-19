@@ -12,12 +12,14 @@ describe "merchant discounts show page '/merchant/:id/discounts/:id'" do
     @discount5 = Discount.create!(item_requirement: 50, percentage_discount: 0.45, merchant_id: @merchant1.id)
     @discount6 = Discount.create!(item_requirement: 19, percentage_discount: 0.30, merchant_id: @merchant2.id)
   end
+
   it "can see the bulk discount's quantity threshold and percentage discount" do 
     visit "/merchant/#{@merchant1.id}/discounts/#{@discount1.id}"
 
     expect(page).to have_content(@discount1.item_requirement)
-    expect(page).to have_content(@discount1.percentage_discount)
+    expect(page).to have_content(@discount1.format_percent)
   end
+  
   it "can see a link to edit the discount and is redirected to a new page" do 
     visit "/merchant/#{@merchant1.id}/discounts/#{@discount1.id}"
 
