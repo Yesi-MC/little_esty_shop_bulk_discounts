@@ -21,11 +21,10 @@ describe Merchant do
       @item_2 = Item.create!(name: "Conditioner", description: "This makes your hair shiny", unit_price: 8, merchant_id: @merchant1.id)
       @item_3 = Item.create!(name: "Brush", description: "This takes out tangles", unit_price: 5, merchant_id: @merchant1.id)
       @item_4 = Item.create!(name: "Hair tie", description: "This holds up your hair", unit_price: 1, merchant_id: @merchant1.id)
-      @item_7 = Item.create!(name: "Scrunchie", description: "This holds up your hair but is bigger", unit_price: 3, merchant_id: @merchant1.id)
-      @item_8 = Item.create!(name: "Butterfly Clip", description: "This holds up your hair but in a clip", unit_price: 5, merchant_id: @merchant1.id)
-
       @item_5 = Item.create!(name: "Bracelet", description: "Wrist bling", unit_price: 200, merchant_id: @merchant2.id)
       @item_6 = Item.create!(name: "Necklace", description: "Neck bling", unit_price: 300, merchant_id: @merchant2.id)
+      @item_7 = Item.create!(name: "Scrunchie", description: "This holds up your hair but is bigger", unit_price: 3, merchant_id: @merchant1.id)
+      @item_8 = Item.create!(name: "Butterfly Clip", description: "This holds up your hair but in a clip", unit_price: 5, merchant_id: @merchant1.id)
 
       @customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
       @customer_2 = Customer.create!(first_name: 'Cecilia', last_name: 'Jones')
@@ -72,6 +71,15 @@ describe Merchant do
 
     it "top_5_items" do
       expect(@merchant1.top_5_items).to eq([@item_1, @item_2, @item_3, @item_8, @item_4])
+    end
+
+    it "top merchants" do 
+      expect(Merchant.top_merchants).to eq([@merchant1])
+
+    end
+
+    it "best day" do 
+      expect(@merchant1.best_day).to eq(@invoice_1.created_at.to_date)
     end
   end
 end
