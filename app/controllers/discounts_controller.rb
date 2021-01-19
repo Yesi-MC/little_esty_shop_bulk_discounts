@@ -19,10 +19,10 @@ class DiscountsController < ApplicationController
     merchant = Merchant.find(params[:merchant_id])
     discount = merchant.discounts.new(discount_params)
      if discount.save
-    redirect_to merchant_discounts_path(merchant.id)
+      redirect_to merchant_discounts_path(merchant.id)
     else  
       flash.notice = "Discount Incorrectly Entered. Try Again!"
-    redirect_to merchant_discounts_path(merchant.id)
+      redirect_to merchant_discounts_path(merchant.id)
     end 
   end
 
