@@ -12,6 +12,7 @@ describe "merchant discounts edit page '/merchant/:id/discounts/:id/edit'" do
     @discount5 = Discount.create!(item_requirement: 50, percentage_discount: 0.45, merchant_id: @merchant1.id)
     @discount6 = Discount.create!(item_requirement: 19, percentage_discount: 0.30, merchant_id: @merchant2.id)
   end
+  
   it "can click submit I am redirected to the bulk discount's show page & the discount's attributes have been updated" do 
     visit "/merchant/#{@merchant1.id}/discounts/#{@discount1.id}/edit"
 
@@ -22,8 +23,9 @@ describe "merchant discounts edit page '/merchant/:id/discounts/:id/edit'" do
 
     expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts/#{@discount1.id}")
     expect(page).to have_content('18')
-    expect(page).to have_content('0.19')
+    expect(page).to have_content('19.0%')
   end 
+
   describe "When I DO NOT enter the information in the form and I click 'Submit'" do
     before :each do
       visit "/merchant/#{@merchant1.id}/discounts/#{@discount1.id}/edit"

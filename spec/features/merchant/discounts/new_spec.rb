@@ -12,6 +12,7 @@ describe "merchant discounts create page '/merchant/:id/discounts/new'" do
     @discount5 = Discount.create!(item_requirement: 50, percentage_discount: 0.45, merchant_id: @merchant1.id)
     @discount6 = Discount.create!(item_requirement: 19, percentage_discount: 0.30, merchant_id: @merchant2.id)
   end
+  
   it "can fill in the form with valid data then be redirected back to the discount index" do 
     visit "/merchant/#{@merchant1.id}/discounts/new"
 
@@ -22,8 +23,9 @@ describe "merchant discounts create page '/merchant/:id/discounts/new'" do
 
     expect(current_path).to eq(merchant_discounts_path(@merchant1.id))
     expect(page).to have_content('16')
-    expect(page).to have_content('0.17')
+    expect(page).to have_content('17.0%')
   end 
+
   describe "When I DO NOT enter the right information in the discount and I click 'Submit'" do
     before :each do
       visit "/merchant/#{@merchant1.id}/discounts/new"
