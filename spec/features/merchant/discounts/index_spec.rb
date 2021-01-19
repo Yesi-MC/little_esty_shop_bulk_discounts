@@ -76,4 +76,11 @@ describe "merchant discounts index '/merchant/:id/discounts'" do
 
     expect(current_path).to eq(merchant_discounts_path(@merchant1.id))
   end 
+
+  it "can see a link to be redirected back to merchant dashboard (merchant/:id/dashboard)" do 
+    visit merchant_discounts_path(@merchant1.id)
+
+    click_link "Back to Dashboard" 
+    expect(current_path).to eq(merchant_dashboard_index_path(@merchant1.id))
+  end
 end
