@@ -4,4 +4,8 @@ class Discount < ApplicationRecord
   validates_numericality_of :percentage_discount, :greater_than_or_equal_to => 0.01, :less_than_or_equal_to => 1
    
   belongs_to :merchant
+
+  def format_percent
+    self.percentage_discount * 100
+  end
 end
