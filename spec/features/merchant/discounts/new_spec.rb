@@ -24,4 +24,23 @@ describe "merchant discounts create page '/merchant/:id/discounts/new'" do
     expect(page).to have_content('16')
     expect(page).to have_content('0.17')
   end 
+  describe "When I DO NOT enter the right information in the discount and I click 'Submit'" do
+    before :each do
+      visit "/merchant/#{@merchant1.id}/discounts/new"
+
+      fill_in :discount_item_requirement, with: 'ten'
+      fill_in :discount_percentage_discount, with: '0.19'
+
+      click_button 
+    end
+
+    it 'Then I see a flash message stating that the item did not update' do
+      expect(page).to have_content("Discount Incorrectly Entered. Try Again!")
+    end
+
+    it "Then I am redirected back to the merchant's discounts new page" do
+      
+      expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts")
+    end
+  end 
 end 

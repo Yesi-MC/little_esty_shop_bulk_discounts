@@ -23,14 +23,24 @@ describe "merchant discounts edit page '/merchant/:id/discounts/:id/edit'" do
     expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts/#{@discount1.id}")
     expect(page).to have_content('18')
     expect(page).to have_content('0.19')
-  end
+  end 
+  describe "When I DO NOT enter the information in the form and I click 'Submit'" do
+    before :each do
+      visit "/merchant/#{@merchant1.id}/discounts/#{@discount1.id}/edit"
+
+      fill_in :discount_item_requirement, with: ' '
+      fill_in :discount_percentage_discount, with: '0.19'
+
+      click_button 
+    end
+
+    it 'Then I see a flash message stating that the item did not update' do
+      expect(page).to have_content("Discount Incorrectly Entered. Try Again!")
+    end
+
+    it "Then I am redirected back to the merchant's discounts show page" do
+      
+      expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts/#{@discount1.id}")
+    end
+  end 
 end 
-  
-
-
-
-  # Then I am taken to a new page with a form to edit the discount
-  # And I see that the discounts current attributes are prepoluated in the form
-  # When I change any/all of the information and click submit
-  # Then I am redirected to the bulk discount's show page
-  # And I see that the discount's attributes have been updated

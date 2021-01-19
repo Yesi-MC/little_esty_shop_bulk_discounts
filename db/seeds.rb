@@ -28,6 +28,8 @@ item_1 = Item.create!(name: "Shampoo", description: "This washes your hair", uni
 item_2 = Item.create!(name: "Conditioner", description: "This makes your hair shiny", unit_price: 8, merchant_id: merchant1.id)
 item_3 = Item.create!(name: "Brush", description: "This takes out tangles", unit_price: 5, merchant_id: merchant1.id)
 item_4 = Item.create!(name: "Hair tie", description: "This holds up your hair", unit_price: 1, merchant_id: merchant1.id)
+item_5 = Item.create!(name: "Radio", description: "This lets you hear music", unit_price: 1, merchant_id: merchant2.id)
+item_6 = Item.create!(name: "Pens", description: "This helps you write", unit_price: 1, merchant_id: merchant2.id)
 
 ii_1 = InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_1.id, quantity: 1, unit_price: 10, status: 0)
 ii_2 = InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_2.id, quantity: 1, unit_price: 8, status: 0)
